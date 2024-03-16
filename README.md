@@ -4,6 +4,7 @@
 [![.github/workflows/test.yml](https://github.com/floatplane/ministache/actions/workflows/test.yml/badge.svg)](https://github.com/floatplane/ministache/actions/workflows/test.yml)
 [![.github/workflows/static_analysis.yml](https://github.com/floatplane/ministache/actions/workflows/static_analysis.yml/badge.svg)](https://github.com/floatplane/ministache/actions/workflows/static_analysis.yml)
 [![.github/workflows/clangformat.yml](https://github.com/floatplane/ministache/actions/workflows/clangformat.yml/badge.svg)](https://github.com/floatplane/ministache/actions/workflows/clangformat.yml)
+[![BuyMeACoffee](https://raw.githubusercontent.com/pachadotdev/buymeacoffee-badges/main/bmc-donate-yellow.svg)](https://www.buymeacoffee.com/floatplane)
 
 # Ministache
 
@@ -40,3 +41,9 @@ Partials are a powerful Mustache feature allow you to define a chunk of template
 ## Projects using Ministache
 
 - [floatplane/mitsubishi2MQTT](https://github.com/floatplane/mitsubishi2MQTT)
+
+## Support 
+
+I hope this is useful to you! If it is, then maybe you'd like to buy me a coffee? :blush:
+
+<a href="https://www.buymeacoffee.com/floatplane" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-violet.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
