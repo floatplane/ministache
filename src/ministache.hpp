@@ -12,8 +12,10 @@
 
 namespace ministache {
 
+typedef std::vector<std::pair<String, String>> PartialList;
+
 String render(const String& templateContents, const ArduinoJson::JsonDocument& data,
-              const std::vector<std::pair<String, String>>& partials = {});
+              const PartialList& partials = {});
 
 };  // namespace ministache
 

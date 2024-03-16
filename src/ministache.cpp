@@ -34,14 +34,16 @@ struct DelimiterPair {
   String close;
 };
 
+using ministache::PartialList;
+
 static std::pair<String, size_t> renderWithContextStack(
     const String& templateContents, size_t position, std::vector<JsonVariantConst>& contextStack,
 
-    const std::vector<std::pair<String, String>>& partials, bool renderingEnabled,
+    const PartialList& partials, bool renderingEnabled,
     const DelimiterPair& initialDelimiters = {.open = "{{", .close = "}}"});
 
 String ministache::render(const String& templateContents, const ArduinoJson::JsonDocument& data,
-                          const std::vector<std::pair<String, String>>& partials) {
+                          const PartialList& partials) {
   // set up context stack
   // root of stack: object/array/null/string
   // each recursive call to renderWithContextStack does the following:
@@ -60,16 +62,20 @@ String ministache::render(const String& templateContents, const ArduinoJson::Jso
 // Tokens that don't output content and are standalone (i.e. not surrounded by non-whitespace)
 // should not leave blank lines in the content. This function returns the range of the template
 // that should be excluded from the output when the token is standalone.
+struct Range {
+  size_t start;
+  size_t end;
+};
 struct ExclusionRange {
   size_t start;
   size_t end;
   size_t indentation;
 };
-static ExclusionRange getExclusionRangeForToken(const String& templateContents, size_t tokenStart,
-                                                size_t tokenEnd, TokenType tokenType) {
+static ExclusionRange getExclusionRangeForToken(const String& templateContents, const Range& range,
+                                                TokenType tokenType) {
   ExclusionRange defaultResult{
-      .start = tokenStart,
-      .end = tokenEnd,
+      .start = range.start,
+      .end = range.end,
       .indentation = 0,
   };
 
@@ -78,20 +84,20 @@ static ExclusionRange getExclusionRangeForToken(const String& templateContents, 
     return defaultResult;
   }
 
-  auto lineStart = templateContents.lastIndexOf('\n', static_cast<int>(tokenStart)) +
-                   1;                                       // 0 if this is the first line
-  auto lineEnd = templateContents.indexOf('\n', tokenEnd);  // -1 if this is the last line
+  auto lineStart = templateContents.lastIndexOf('\n', static_cast<int>(range.start)) +
+                   1;                                        // 0 if this is the first line
+  auto lineEnd = templateContents.indexOf('\n', range.end);  // -1 if this is the last line
   if (lineEnd == -1) {
     lineEnd = static_cast<int>(templateContents.length());
   }
   bool standalone = true;
-  for (int i = lineStart; i < static_cast<int>(tokenStart); i++) {
+  for (int i = lineStart; i < static_cast<int>(range.start); i++) {
     if (isspace(templateContents[i]) == 0) {
       standalone = false;
       break;
     }
   }
-  for (int i = static_cast<int>(tokenEnd); i < lineEnd; i++) {
+  for (int i = static_cast<int>(range.end); i < lineEnd; i++) {
     if (isspace(templateContents[i]) == 0) {
       standalone = false;
       break;
@@ -103,9 +109,9 @@ static ExclusionRange getExclusionRangeForToken(const String& templateContents, 
 
   // If the token is on the very last line of the template, then remove the preceding newline,
   // but only if there's no leading whitespace before the token
-  size_t indentation = tokenStart - lineStart;
+  size_t indentation = range.start - lineStart;
   if (lineEnd == static_cast<int>(templateContents.length()) && lineStart > 0 &&
-      lineStart == static_cast<int>(tokenStart)) {
+      lineStart == static_cast<int>(range.start)) {
     lineStart--;
     // Also remove any preceding carriage return
     if (lineStart > 0 && templateContents[lineStart] == '\r') {
@@ -149,7 +155,6 @@ static bool isValidContextForPath(const JsonVariantConst& context,
 
 static JsonVariantConst lookupTokenInContext(const std::vector<String>& path,
                                              const JsonVariantConst& context) {
-  String result;
   auto node = context;
   for (size_t i = 0; i < path.size(); i++) {
     node = node[path[i]];
@@ -163,10 +168,12 @@ static JsonVariantConst lookupTokenInContextStack(
     return contextStack.back();
   }
   std::vector<String> path = splitPath(name);
-  for (auto context = contextStack.rbegin(); context != contextStack.rend(); context++) {
-    if (isValidContextForPath(*context, path)) {
-      return lookupTokenInContext(path, *context);
-    }
+  auto context = std::find_if(
+      contextStack.rbegin(), contextStack.rend(),
+      [&](const JsonVariantConst& context) { return isValidContextForPath(context, path); });
+
+  if (context != contextStack.rend()) {
+    return lookupTokenInContext(path, *context);
   }
   return JsonVariantConst();
 }
@@ -287,8 +294,7 @@ std::pair<Token, size_t> parseTokenAtPoint(const String& templateContents, size_
 static std::pair<String, size_t> renderWithContextStack(
     const String& templateContents, size_t position, std::vector<JsonVariantConst>& contextStack,
 
-    const std::vector<std::pair<String, String>>& partials, bool renderingEnabled,
-    const DelimiterPair& initialDelimiters) {
+    const PartialList& partials, bool renderingEnabled, const DelimiterPair& initialDelimiters) {
   String result;
   DelimiterPair delimiters = initialDelimiters;
   while (position < templateContents.length()) {
@@ -305,7 +311,8 @@ static std::pair<String, size_t> renderWithContextStack(
 
     const auto parsedToken = parseTokenAtPoint(templateContents, nextToken, delimiters);
     const auto tokenRenderExtents = getExclusionRangeForToken(
-        templateContents, nextToken, parsedToken.second, parsedToken.first.type);
+        templateContents, {.start = static_cast<size_t>(nextToken), .end = parsedToken.second},
+        parsedToken.first.type);
     if (renderingEnabled) {
       result.concat(templateContents.substring(position, tokenRenderExtents.start));
     }
