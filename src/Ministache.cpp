@@ -1,5 +1,5 @@
 
-#include "ministache.hpp"
+#include "Ministache.h"
 
 #include <Arduino.h>
 #include <ArduinoJson.h>
