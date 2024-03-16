@@ -1,4 +1,4 @@
-#include <ministache.hpp>
+#include <Ministache.h>
 
 /***************************************************
   This is a very basic example for the ministache library
@@ -40,7 +40,8 @@ void setup() {
   String reportString = "People report:\n{{#people}}{{> person}}{{/people}}";
 
   // Render the template with the data. The third argument is the partials list. This
-  // defines how to map a partial reference like {{>person }} to a particular template (personString).
+  // defines how to map a partial reference like {{>person }} to a particular template
+  // (personString).
   String output = ministache::render(reportString, data, {{"person", personString}});
 
   // Print the result

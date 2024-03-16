@@ -1,4 +1,4 @@
-#include <ministache.hpp>
+#include <Ministache.h>
 
 /***************************************************
   This is a very basic example for the ministache library

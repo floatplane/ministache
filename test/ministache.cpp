@@ -1,6 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT  // REQUIRED: Enable custom main()
 
-#include "ministache.hpp"
+#include "Ministache.h"
 
 #include <Arduino.h>
 #include <ArduinoJson.h>
