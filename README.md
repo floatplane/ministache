@@ -1,3 +1,4 @@
+[![PlatformIO Registry](https://badges.registry.platformio.org/packages/floatplane/library/Ministache.svg)](https://registry.platformio.org/libraries/floatplane/Ministache)
 [![.github/workflows/arduino_lint.yml](https://github.com/floatplane/ministache/actions/workflows/arduino_lint.yml/badge.svg)](https://github.com/floatplane/ministache/actions/workflows/arduino_lint.yml)
 [![.github/workflows/build.yml](https://github.com/floatplane/ministache/actions/workflows/build.yml/badge.svg)](https://github.com/floatplane/ministache/actions/workflows/build.yml)
 [![.github/workflows/test.yml](https://github.com/floatplane/ministache/actions/workflows/test.yml/badge.svg)](https://github.com/floatplane/ministache/actions/workflows/test.yml)
