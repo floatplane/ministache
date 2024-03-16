@@ -10,7 +10,8 @@
  ****************************************************/
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
+  Serial.println("");
 
   // Create a JSON object to hold the data that we'll use in our template
   JsonDocument data;
