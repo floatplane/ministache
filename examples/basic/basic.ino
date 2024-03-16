@@ -13,7 +13,7 @@ void setup() {
   Serial.begin(115200);
   Serial.println("");
 
-  // Create a JSON object to hold the data that we'll use in our template
+  // Create a JsonDocument instance to hold the data that we'll use in our template
   JsonDocument data;
   data["name"] = "World";
   data["value"] = 42;
@@ -25,7 +25,11 @@ void setup() {
   String output = ministache::render(templateString, data);
 
   // Print the result
-  Serial.println(output);  // Prints: Hello, World! The answer is 42.
+  Serial.println(output);
+
+  // Expected output:
+  //
+  // Hello, World! The answer is 42.
 }
 
 void loop() {

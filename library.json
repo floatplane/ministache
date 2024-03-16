@@ -1,0 +1,39 @@
+{
+    "name": "Ministache",
+    "version": "1.0.0",
+    "description": "Ministache is a small, fast and spec-complete implementation of the Mustache templating language for Arduino. All core Mustache tags are supported: interpolation, partials, sections, inverted sections, custom delimiters, and comments.",
+    "keywords": ["mustache", "moustache", "text", "text processor", "template", "logic-less", "html"],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/floatplane/ministache"
+    },
+    "authors": [
+        {
+            "name": "Brian Sharon",
+            "url": "https://github.com/floatplane",
+            "maintainer": true
+        }
+    ],
+    "license": "MIT",
+    "platforms": "*",
+    "headers": "Ministache.h",
+    "examples": [
+        {
+            "name": "Basic",
+            "base": "examples/basic",
+            "files": ["basic.ino"]
+        },
+        {
+            "name": "Partials",
+            "base": "examples/partials",
+            "files": ["partials.ino"]
+        }
+    ],
+    "dependencies": {
+        "bblanchon/ArduinoJson": "^7.0.0"
+    },
+    "build": {
+        "unflags": "-std=gnu++11",
+        "flags": "-std=gnu++17"
+    }   
+}
