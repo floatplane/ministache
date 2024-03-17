@@ -39,7 +39,7 @@ Partials are a powerful Mustache feature allow you to define a chunk of template
 
 ## Projects using Ministache
 
-- [floatplane/mitsubishi2MQTT](https://github.com/floatplane/mitsubishi2MQTT)
+- [floatplane/MitsuQTT](https://github.com/floatplane/MitsuQTT)
 
 ## Support 
 
