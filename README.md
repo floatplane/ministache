@@ -36,7 +36,7 @@ See [basic.ino](examples/basic/basic.ino) for a sketch demonstrating basic Minis
 
 ## Partials
 
-Partials are a powerful Mustache feature allow you to define a chunk of template code and use it in a loop. See [partials.ino](examples/partials/partials.ino) for a sketch demonstrating how to use partials with Ministache.
+Partials are a powerful Mustache feature, allowing you to define a chunk of template code and use it in a loop. See [partials.ino](examples/partials/partials.ino) for a sketch demonstrating how to use partials with Ministache.
 
 ## Projects using Ministache
 
