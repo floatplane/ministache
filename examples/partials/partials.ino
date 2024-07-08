@@ -45,7 +45,8 @@ void setup() {
   // Render the template with the data. The third argument is the partials list. This
   // defines how to map a partial reference like "person" to a particular template
   // ("personString").
-  auto output = ministache::render(reportTemplate, data, {{"person", personTemplate}});
+  ministache::PartialList partials = {{"person", personTemplate}};
+  auto output = ministache::render(reportTemplate, data, partials);
 
   // Print the result
   Serial.println(output);
