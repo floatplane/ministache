@@ -1,7 +1,7 @@
 {
     "name": "Ministache",
-    "version": "1.0.0",
-    "description": "Ministache is a small, fast and spec-complete implementation of the Mustache templating language for Arduino. All core Mustache tags are supported: interpolation, partials, sections, inverted sections, custom delimiters, and comments.",
+    "version": "1.0.1",
+    "description": "A small, fast and spec-complete implementation of the Mustache template language for Arduino, supporting interpolation, partials, sections, inverted sections, custom delimiters, and comments.",
     "keywords": ["mustache", "moustache", "text", "text processor", "template", "logic-less", "html"],
     "repository": {
         "type": "git",
