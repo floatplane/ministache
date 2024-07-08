@@ -7,7 +7,7 @@
 
 # Ministache
 
-A spec-complete implementation of the [Mustache](https://mustache.github.io/) templating language for Arduino. A sane alternative to building up complex strings via concatenation and custom code. Very useful for embedded web servers!
+A spec-complete implementation of the [Mustache](https://mustache.github.io/) template language for Arduino. The best way to generate complex text content such as HTML, with full support for all Mustache features and 100% test coverage. A sane alternative to building up complex strings via concatenation and custom code. Very useful for embedded web servers!
 
 ## Features
 
