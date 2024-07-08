@@ -29,18 +29,23 @@ void setup() {
   JsonDocument data;
   deserializeJson(data, json);
 
-  // Create a template string that renders the data for a single person. This is a *partial*.
-  String personString = "Name: {{name}}\tRole: {{role}}\n";
+  // Create a template that renders the data for a single person. This is a *partial*.
+  auto personTemplate = "Name: {{name}}\tRole: {{role}}\n";
 
-  // Create a template string that renders the data for all people. This is the main template.
-  // Note that it loops over a field called "people" and includes the partial "person" for each of
+  // Create a template that renders the data for all people. This is the main template.
+  // Note that it loops over a data field called "people", and includes the partial "person" for each of
   // them.
-  String reportString = "People report:\n{{#people}}{{> person}}{{/people}}";
+  auto reportTemplate = R"""(
+    People report:
+    {{#people}}
+      {{> person}}
+    {{/people}}
+  )""";
 
   // Render the template with the data. The third argument is the partials list. This
   // defines how to map a partial reference like "person" to a particular template
   // ("personString").
-  String output = ministache::render(reportString, data, {{"person", personString}});
+  auto output = ministache::render(reportTemplate, data, {{"person", personTemplate}});
 
   // Print the result
   Serial.println(output);
